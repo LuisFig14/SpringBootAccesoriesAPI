@@ -2,8 +2,11 @@ package com.project.accessories.controller;
 
 import com.project.accessories.entity.Product;
 import com.project.accessories.entity.productData.RegisterDataProduct;
+import com.project.accessories.entity.productData.UpdateDateProduct;
+import com.project.accessories.repository.ProductRepository;
 import com.project.accessories.service.ProductService;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +22,11 @@ import java.util.List;
 public class ProductController {
 
     private final ProductService productService; //Service
+
+    @Autowired
+    ProductRepository productRepository;
+
+
 
     public ProductController(ProductService productService) {
         this.productService = productService;
@@ -46,9 +54,13 @@ public class ProductController {
     }
 
     //Put (Update)
-    @PutMapping("/{id}")
-    public Product updateProduct (@PathVariable Long id , @RequestBody Product productUpdated){
-        return productService.updateProduct(id, productUpdated);
+    @PutMapping
+    @Transactional
+    public ResponseEntity updateProduct (@RequestBody @Valid UpdateDateProduct updateDateProduct){
+        Product product = productService.updateProduct(updateDateProduct);
+
+        return ResponseEntity.ok(new UpdateDateProduct(product.getId(), product.getName(), product.getDescription(),
+        product.getColor()));
     }
 
     //Delete (Delete)

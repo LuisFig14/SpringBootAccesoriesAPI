@@ -1,6 +1,7 @@
 package com.project.accessories.entity;
 
 import com.project.accessories.entity.productData.RegisterDataProduct;
+import com.project.accessories.entity.productData.UpdateDateProduct;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -40,6 +41,14 @@ public class Product {
         this.material = registerDataProduct.material();
         this.measure = registerDataProduct.measure();
         this.price = registerDataProduct.price();
+
+    }
+
+    public void updateDate(UpdateDateProduct updateDateProduct) {
+
+        this.name = updateDateProduct.name();
+        this.description = updateDateProduct.description();
+        this.color = updateDateProduct.color();
 
     }
 }
